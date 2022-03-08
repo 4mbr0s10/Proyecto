@@ -1,6 +1,8 @@
 
 package excpfx;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,13 +22,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
  * @author dam1
  */
 public class ExcpFX extends Application {
-    
+    int ballCenterX=10;
     @Override
     public void start(Stage primaryStage) {
           
@@ -35,7 +38,7 @@ public class ExcpFX extends Application {
         BackgroundImage myBI= new BackgroundImage(new Image("fondo.png",1280,720,false,true),
         BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
           BackgroundSize.DEFAULT);
-//then you set to your node
+
     Background bg = new Background (myBI);
         
    root.setBackground(bg);
@@ -45,7 +48,7 @@ public class ExcpFX extends Application {
         primaryStage.show();
 //        Circle sopapo = new Circle(10, 10, 10);
 //        sopapo.setFill(Color.CHARTREUSE);
-        Image image = new Image("sopapo.png");
+        Image imagenSopapo = new Image("sopapo.png");
         
         Polygon p = new Polygon();
         
@@ -58,14 +61,21 @@ public class ExcpFX extends Application {
         p.getPoints().add(0.0);
         p.getPoints().add(100.0);
         
-        p.setFill(new ImagePattern(image, 0, 0, 1, 1, true));
+        p.setFill(new ImagePattern(imagenSopapo, 0, 0, 1, 1, true));
         
         root.getChildren().add(p);
 //        Image image = new Image("sopapo.png");
 //        SopapoSprite sp = new SopapoSprite();
 //        sp.setImage(image);
-          
-           
+           Timeline animationBall = new Timeline(
+           new KeyFrame(Duration.seconds(0.017), (ActionEvent ae) ->{
+               p.setLayoutX(ballCenterX);
+               ballCenterX+=6;
+               System.out.println(ballCenterX);
+           })
+           ); 
+                   animationBall.setCycleCount(Timeline.INDEFINITE);
+                   animationBall.play();
         
     }
 
